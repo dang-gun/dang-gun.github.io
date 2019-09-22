@@ -2,13 +2,15 @@
  * DG JsDataBind 1.0
  * https://blog.danggun.net/7449
  * https://github.com/dang-gun/DG_JsDataBind
+ * 
+ * test : https://dang-gun.github.io/DG_JsDataBind/test/index.html
  */
 
 /** 생성자 */
 function DG_JsDataBind()
 {
     var objThis = this;
-    this.MatchListAdd("defult"
+    this.MatchPatternListAdd("defult"
         , {
             "": function (sOriData, sMatchString, sValue) { return objThis.ReplaceAll(sOriData, sMatchString, sValue); }
             , ":money": function (sOriData, sMatchString, sValue) { return objThis.ReplaceAll(sOriData, sMatchString, sValue+":돈이다"); }
@@ -16,12 +18,12 @@ function DG_JsDataBind()
 }
 
 /** 패턴의 앞쪽  */
-DG_JsDataBind.prototype.FrontMark = "{{";
+DG_JsDataBind.prototype.Mark_Front = "{{";
 /** 패턴의 뒷쪽  */
-DG_JsDataBind.prototype.BackMark = "}}";
+DG_JsDataBind.prototype.Mark_Back = "}}";
 
-//리스트매치 관리용 리스트
-DG_JsDataBind.prototype.ListMatchList = {};
+//매치패턴 관리용 리스트
+DG_JsDataBind.prototype.MatchPatternList = {};
 
 
 /**
@@ -37,23 +39,28 @@ DG_JsDataBind.prototype.ReplaceAll = function (sOriData, sSearch, sReplacement)
 };
 
 /**
- * 리스트매치를 리스트에 추가한다.
- * @param {string} sTypeName 리스트매치 구분용 타입
- * @param {json} josnListMatch 리스트매치에 사용할 리스트
+ * 매치패턴 리스트를 리스트에 추가한다.
+ * @param {string} sMatchPatternName 매치패턴 구분용 이름
+ * @param {json} josnMatchPatternList 매치패턴에 사용할 리스트
  */
-DG_JsDataBind.prototype.MatchListAdd = function (sTypeName, josnListMatch)
+DG_JsDataBind.prototype.MatchPatternListAdd = function (
+    sMatchPatternName
+    , josnMatchPatternList)
 {
-    this.ListMatchList[sTypeName] = josnListMatch;
+    this.MatchPatternList[sMatchPatternName] = josnMatchPatternList;
 };
 
 /**
  * 지정한 타입에 
  * @param {string} sOriData 변경에 사용할 데이터
- * @param {string[]} arrTypeName 사용할 매치 타입 이름 리스트
+ * @param {string[]} arrMatchPatternName 사용할 매치패턴 이름 리스트
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
  * @returns {string} 완성된 결과
  */
-DG_JsDataBind.prototype.DataBind = function (sOriData, arrTypeName, jsonValue)
+DG_JsDataBind.prototype.DataBind = function (
+    sOriData
+    , arrMatchPatternName
+    , jsonValue)
 {
     //리턴할 데이터
     var sReturn = sOriData;
@@ -64,15 +71,15 @@ DG_JsDataBind.prototype.DataBind = function (sOriData, arrTypeName, jsonValue)
     //데이터 백업
     var jsonValueTemp = jsonValue;
 
-    if (true === Array.isArray(arrTypeName))
+    if (true === Array.isArray(arrMatchPatternName))
     {
-        for (var i = 0; i < arrTypeName.length; ++i)
+        for (var i = 0; i < arrMatchPatternName.length; ++i)
         {
             //사용할 타입 이름
-            var sItem = arrTypeName[i];
+            var sItem = arrMatchPatternName[i];
 
             //사용할 타입 검색
-            var jsonTypeData = this.ListMatchList[sItem];
+            var jsonTypeData = this.MatchPatternList[sItem];
 
             if (jsonTypeData)
             {//사용할 타입이 있다.
@@ -96,15 +103,15 @@ DG_JsDataBind.prototype.DataBind = function (sOriData, arrTypeName, jsonValue)
 /**
  * 원본에서 지정된 변환값에 타입이름을 합쳐서 찾은 후 연결된 함수를 호출한다.
  * @param {string} sOriData 원본
- * @param {string} sTypeData 사용할 타입 데이터 - 타입 문자열
- * @param {function} funTypeData 사용할 타입 데이터 - 연결된 함수)
+ * @param {string} sMatchPatternData 사용할 매치패턴 데이터 - 매치패턴 문자열
+ * @param {function} funMatchPatternData 사용할 매치패턴 데이터 - 연결된 함수)
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
  * @returns {string} 완성된 결과
  */
 DG_JsDataBind.prototype.DataBind_TypeItme = function (
     sOriData
-    , sTypeData
-    , funTypeData
+    , sMatchPatternData
+    , funMatchPatternData
     , jsonValue)
 {
     //원본 백업
@@ -121,11 +128,11 @@ DG_JsDataBind.prototype.DataBind_TypeItme = function (
         var sValue = jsonValue[sValueName];
 
         //매치용 문자열
-        var sMatchString = this.FrontMark + sValueName + sTypeData + this.BackMark;
+        var sMatchString = this.Mark_Front + sValueName + sMatchPatternData + this.Mark_Back;
         
         if (0 <= sOriDataTemp.indexOf(sMatchString))
         {//매치에 성공한 데이터가 있다.
-            sOriDataTemp = funTypeData(sOriDataTemp, sMatchString, sValue);
+            sOriDataTemp = funMatchPatternData(sOriDataTemp, sMatchString, sValue);
         }
     }
 
@@ -135,30 +142,33 @@ DG_JsDataBind.prototype.DataBind_TypeItme = function (
 /**
  * 원본에서 지정된 타입의 찾아서 변환값을 찾아서 함수를 호출한다.
  * @param {string} sOriData 원본
- * @param {json} jsonTypeData 비교할 타입데이터 리스트
+ * @param {json} jsonMatchPatternData 비교할 매치패턴 데이터 리스트
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
  * @returns {string} 완성된 결과
  */
-DG_JsDataBind.prototype.DataBind_SelectType = function (sOriData, jsonTypeData, jsonValue)
+DG_JsDataBind.prototype.DataBind_SelectType = function (
+    sOriData
+    , jsonMatchPatternData
+    , jsonValue)
 {
     //원본 백업
     var sOriDataTemp = sOriData;
 
     //타입데이터를 키로 변환
-    var jsonTypeDataKeys = Object.keys(jsonTypeData);
+    var jsonMatchPatternKeys = Object.keys(jsonMatchPatternData);
 
-    for (var i = 0; i < jsonTypeDataKeys.length; ++i)
+    for (var i = 0; i < jsonMatchPatternKeys.length; ++i)
     {
         //타입 이름 추출
-        var sTypeDataName = jsonTypeDataKeys[i];
+        var sMatchPatternName = jsonMatchPatternKeys[i];
         //타입 함수 추축
-        var funTypeData = jsonTypeData[sTypeDataName];
+        var funMatchPattern = jsonMatchPatternData[sMatchPatternName];
 
         //변환 함수 호출
         sOriDataTemp
             = this.DataBind_TypeItme(sOriDataTemp
-                                    , sTypeDataName
-                                    , funTypeData
+                                    , sMatchPatternName
+                                    , funMatchPattern
                                     , jsonValue);
     }
 
