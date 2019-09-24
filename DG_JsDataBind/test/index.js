@@ -23,6 +23,7 @@ function OnStart00() {
             , {
                 "test001": "test-001"
             }
+            , DG_JsDataBind_MatchType.Select
         );
 
     domTxtResult.value = sReturn;
@@ -43,9 +44,10 @@ function OnStart01()
                 "test001": "test-001"
                 , "test002": "test-002"
             }
+            , DG_JsDataBind_MatchType.Select
         );
 
-    domTxtResult.value = sReturn;
+    domTxtResult.value = sReturn.ResultString;
 
 }
 
@@ -75,9 +77,10 @@ function OnStart02()
                 "test001": "test-001"
                 , "test002": "test-002"
             }
+            , DG_JsDataBind_MatchType.Select
         );
 
-    domTxtResult.value = sReturn;
+    domTxtResult.value = sReturn.ResultString;
 }
 
 /** 셈플1 */
@@ -100,10 +103,11 @@ function Test_Sample01()
             sOriData
             , ["defult"]
             , jsonValue
+            , DG_JsDataBind_MatchType.Select
         );
 
     //결과 출력
-    domTxtResult.value = sReturn;
+    domTxtResult.value = sReturn.ResultString;
 }
 
 
@@ -138,14 +142,15 @@ function Test_Sample02()
             sOriData
             , ["NameAdd"]
             , jsonValue
+            , DG_JsDataBind_MatchType.Select
         );
 
     //결과 출력
-    domTxtResult.value = sReturn;
+    domTxtResult.value = sReturn.ResultString;
 }
 
 
-/** 셈플2 */
+/** 셈플3 */
 function Test_Sample03() {
     //개체 생성
     var insDB = new DG_JsDataBind();
@@ -174,8 +179,46 @@ function Test_Sample03() {
             sOriData
             , ["defult", "NameAdd"]
             , jsonValue
+            , DG_JsDataBind_MatchType.Select
         );
 
     //결과 출력
-    domTxtResult.value = sReturn;
+    domTxtResult.value = sReturn.ResultString;
+}
+
+
+/** 셈플4 */
+function Test_Sample04() {
+    //개체 생성
+    var insDB = new DG_JsDataBind();
+    //원본 데이터
+    var sOriData = "내 이름은 {{name:name1}}{{name:name2}} 나이는 {{age}}입니다.";
+
+    //사용자 정의 패턴 추가
+    var jsonAdd = {
+        ":name1": function (sOriData, sMatchString, sValue) { return insDB.ReplaceAll(sOriData, sMatchString, sValue); }
+        , ":name2": function (sOriData, sMatchString, sValue) { return insDB.ReplaceAll(sOriData, sMatchString, "(" + sValue + ")"); }
+    };
+
+    //패턴 추가
+    insDB.MatchPatternListAdd("NameAdd", jsonAdd);
+
+    //바인딩에 사용할 데이터
+    var jsonValue = {
+        "name": "John"
+        , "age": "50"
+    };
+
+
+    //데이터 바인딩 시도
+    var sReturn =
+        insDB.DataBind(
+            sOriData
+            , ["defult", "NameAdd"]
+            , jsonValue
+            , DG_JsDataBind_MatchType.First
+        );
+
+    //결과 출력
+    domTxtResult.value = sReturn.ResultString;
 }

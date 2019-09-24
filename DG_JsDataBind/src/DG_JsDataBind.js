@@ -6,6 +6,14 @@
  * test : https://dang-gun.github.io/DG_JsDataBind/test/index.html
  */
 
+/** 데이터 바인드에 사용할 매치 방법  */
+var DG_JsDataBind_MatchType = {
+    //지정된 모든 매치패턴 리스트 검사
+    Select: 1,
+    //처음 1개가 매치되면 검사를 끝냄
+    First: 2
+};
+
 /** 생성자 */
 function DG_JsDataBind()
 {
@@ -55,18 +63,30 @@ DG_JsDataBind.prototype.MatchPatternListAdd = function (
  * @param {string} sOriData 변경에 사용할 데이터
  * @param {string[]} arrMatchPatternName 사용할 매치패턴 이름 리스트
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
- * @returns {string} 완성된 결과
+ * @param {int} nMatchType 매치방식. 'DG_JsDataBind_MatchType'사용
+ * @returns {josn} 완성된 결과. Match=하나라도 매치에 성공했는지 여부. ResultString=완성된 문자열
  */
 DG_JsDataBind.prototype.DataBind = function (
     sOriData
     , arrMatchPatternName
-    , jsonValue)
+    , jsonValue
+    , nMatchType)
 {
     //리턴할 데이터
     var sReturn = sOriData;
 
     //원본 백업
     var sOriDataTemp = sOriData;
+
+    //리턴용 데이터
+    var jsonReturn = {
+        Match: false
+        , ResultString: ""
+    };
+
+    //1개 이상 매치 되었을때 표시
+    var bMatch = false;
+
 
     //데이터 백업
     var jsonValueTemp = jsonValue;
@@ -83,21 +103,40 @@ DG_JsDataBind.prototype.DataBind = function (
 
             if (jsonTypeData)
             {//사용할 타입이 있다.
-                sOriDataTemp
+                jsonReturn
                     = this.DataBind_SelectType(
                         sOriDataTemp
                         , jsonTypeData
                         , jsonValueTemp);
+
+                //받은 문자열 저장
+                sOriDataTemp = jsonReturn.ResultString;
+
+                if (true === jsonReturn.Match)
+                {//1개 이상 매치됨
+                    //매치되었음을 알림
+                    bMatch = true;
+                }
+
+                if ((true === jsonReturn.Match)
+                    && (nMatchType === DG_JsDataBind_MatchType.First))
+                {//매치된것이 있다.
+                    //&& 처음 한개 매치 옵션 사용중
+
+                    //매치된것이 있으므로 검사를 끝낸다.
+                    break;
+                }
             }
             
         }//end for i
 
-        //완성본 백업
-        sReturn = sOriDataTemp;
-    }
+        //완성본 전달
+        jsonReturn.ResultString = sOriDataTemp;
+        jsonReturn.Match = bMatch;
+    }//end if arrMatchPatternName
 
 
-    return sReturn;
+    return jsonReturn;
 };
 
 /**
@@ -106,16 +145,24 @@ DG_JsDataBind.prototype.DataBind = function (
  * @param {string} sMatchPatternData 사용할 매치패턴 데이터 - 매치패턴 문자열
  * @param {function} funMatchPatternData 사용할 매치패턴 데이터 - 연결된 함수)
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
- * @returns {string} 완성된 결과
+ * @param {int} nMatchType 매치방식. 'DG_JsDataBind_MatchType'사용
+ * @returns {josn} 완성된 결과. Match=하나라도 매치에 성공했는지 여부. ResultString=완성된 문자열
  */
 DG_JsDataBind.prototype.DataBind_TypeItme = function (
     sOriData
     , sMatchPatternData
     , funMatchPatternData
-    , jsonValue)
+    , jsonValue
+    , nMatchType)
 {
     //원본 백업
     var sOriDataTemp = sOriData;
+
+    //리턴용 데이터
+    var jsonReturn = {
+        Match: false
+        , ResultString: ""
+    };
 
     //변환할 데이터 키 리스트
     var jsonValueKeys = Object.keys(jsonValue);
@@ -132,11 +179,24 @@ DG_JsDataBind.prototype.DataBind_TypeItme = function (
         
         if (0 <= sOriDataTemp.indexOf(sMatchString))
         {//매치에 성공한 데이터가 있다.
-            sOriDataTemp = funMatchPatternData(sOriDataTemp, sMatchString, sValue);
-        }
-    }
+            jsonReturn.Match = true;
 
-    return sOriDataTemp;
+            //연결된 함수 실행
+            sOriDataTemp = funMatchPatternData(sOriDataTemp, sMatchString, sValue);
+
+            if (nMatchType === DG_JsDataBind_MatchType.First)
+            {//처음 한개 매치 옵션 사용중
+                //매치된것이 있으므로 검사를 끝낸다.
+                break;
+            }
+        }
+    }//end for i
+
+
+    //완성본 전달
+    jsonReturn.ResultString = sOriDataTemp;
+
+    return jsonReturn;
 };
 
 /**
@@ -144,15 +204,26 @@ DG_JsDataBind.prototype.DataBind_TypeItme = function (
  * @param {string} sOriData 원본
  * @param {json} jsonMatchPatternData 비교할 매치패턴 데이터 리스트
  * @param {json} jsonValue 변환에 사용할 데이터(찾을 값, 변환할 값)
- * @returns {string} 완성된 결과
+ * @param {int} nMatchType 매치방식. 'DG_JsDataBind_MatchType'사용
+ * @returns {josn} 완성된 결과. Match=하나라도 매치에 성공했는지 여부. ResultString=완성된 문자열
  */
 DG_JsDataBind.prototype.DataBind_SelectType = function (
     sOriData
     , jsonMatchPatternData
-    , jsonValue)
+    , jsonValue
+    , nMatchType)
 {
     //원본 백업
     var sOriDataTemp = sOriData;
+
+    //리턴용 데이터
+    var jsonReturn = {
+        Match: false
+        , ResultString: ""
+    };
+
+    //1개 이상 매치 되었을때 표시
+    var bMatch = false;
 
     //타입데이터를 키로 변환
     var jsonMatchPatternKeys = Object.keys(jsonMatchPatternData);
@@ -165,13 +236,36 @@ DG_JsDataBind.prototype.DataBind_SelectType = function (
         var funMatchPattern = jsonMatchPatternData[sMatchPatternName];
 
         //변환 함수 호출
-        sOriDataTemp
+        jsonReturn
             = this.DataBind_TypeItme(sOriDataTemp
-                                    , sMatchPatternName
-                                    , funMatchPattern
-                                    , jsonValue);
-    }
+                , sMatchPatternName
+                , funMatchPattern
+                , jsonValue);
 
+        //받은 문자열 저장
+        sOriDataTemp = jsonReturn.ResultString;
 
-    return sOriDataTemp;
+        if (true === jsonReturn.Match)
+        {//1개 이상 매치됨
+            //매치되었음을 알림
+            bMatch = true;
+        }
+
+        if ((true === jsonReturn.Match)
+            && (nMatchType === DG_JsDataBind_MatchType.First))
+        {//매치된것이 있다.
+            //&& 처음 한개 매치 옵션 사용중
+
+            //매치된것이 있으므로 검사를 끝낸다.
+            break;
+        }
+        
+    }//end for i
+
+    
+    //완성본 전달
+    jsonReturn.ResultString = sOriDataTemp;
+    jsonReturn.Match = bMatch;
+
+    return jsonReturn;
 };
