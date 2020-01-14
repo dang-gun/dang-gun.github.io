@@ -6,9 +6,9 @@
  * test : https://dang-gun.github.io/DG_JsDataBind/test/index.html
  */
 
-/** 데이터 바인드에 사용할 매치 방법  */
+/** 데이터 바인드에 사용할 검사 방법  */
 var DG_JsDataBind_MatchType = {
-    //지정된 모든 매치패턴 리스트 검사
+    //지정된 모든 리스트 검사
     Select: 1,
     //처음 1개가 매치되면 검사를 끝냄
     First: 2
