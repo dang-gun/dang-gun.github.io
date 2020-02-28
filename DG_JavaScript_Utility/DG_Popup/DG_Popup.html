@@ -1,0 +1,137 @@
+﻿<!doctype html>
+
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <style>
+
+        /** 기본 css */
+        .DG_PopupContentCss
+        {
+            border-radius: 3px;
+        }
+
+        /** 사용자 정의 css 추가 */
+        .DG_PopupContentCssAdd
+        {
+            font-size: 20px;
+        }
+
+        /** 사용자가 만든 html에서 사용하는 타이틀 */
+        .divTitle
+        {
+            background:#b6ff00;
+            padding: 3px;
+            margin: 3px;
+            border-radius: 3px;
+        }
+        /** 사용자가 만든 html에서 사용하는 컨탠츠 */
+        .divContents
+        {
+            padding: 3px;
+            margin: 3px;
+        }
+    </style>
+
+    <!-- jquery 3.4.1 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <script src="DG_Popup.js"></script>
+</head>
+
+<body>
+    <h3>DG Popup</h3>
+    <br />
+    <br />
+    <div>
+        <button onclick="Show()">단순 메시지 박스</button>
+    </div>
+
+    <br />
+    <br />
+    <div id="divOutput">
+
+    </div>
+
+    <div id="divOutput2">
+
+    </div>
+
+    <script>
+
+        /** DG_Popup 생성 */
+        DG_Popup.Initialize();
+
+        var popTemp = null;
+
+        var nCount = 0;
+
+        /** 팝업 열기 예제 */
+        function Show()
+        {
+            ++nCount;
+
+            var TestContentsHtml = ' \
+                <div class="divTitle DG_PopupTitle">생성 순서 : '
+                    + nCount +
+                '</div> \
+                <div class="divContents"> \
+                    내용물<br />\
+                    내용물2\
+                    <br />\
+                        <button onclick="Show()">New Popup!!</button>\
+                    <br />\
+                    <br />\
+                    <br />\
+                    <br />\
+                    <button onclick="CloseAll()">All Close</button>\
+                    <br />\
+                    <button onclick="Close()">Close</button>\
+                </div>';
+
+            popTemp = DG_Popup.Show({
+                Content: TestContentsHtml,
+                ContentCss: "DG_PopupContentCssAdd",
+
+                top: getRandomInt(100, 400),
+                left: getRandomInt(100, 400),
+
+                OverlayClick: function (nPopupIndex, divPopupParent)
+                {
+                    console.log(nPopupIndex + ", " + divPopupParent);
+                    DG_Popup.CloseTarget(divPopupParent);
+                }
+            });
+        }
+
+        /** 닫기 이벤트 구현 */
+        function Close()
+        {
+            DG_Popup.Close();
+        }
+
+        function CloseAll()
+        {
+            DG_Popup.CloseAll();
+        }
+
+        /**
+         * 예제에 사용할 랜덤 함수
+         * @param min 최소
+         * @param max 최대
+         */
+        function getRandomInt(min, max) 
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; 
+        }
+    </script>
+
+</body>
+
+</html>
