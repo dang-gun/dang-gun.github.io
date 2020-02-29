@@ -31,13 +31,65 @@ DG_Popup.MouseDownY = 0;
 /** 창이 생성되면 쌓일 배열 */
 DG_Popup.List = [];
 
-/** DG_Popup를 초기화 한다.  */
-DG_Popup.Initialize = function ()
+/** 창열기 기본 옵션 */
+DG_Popup.ShowOptionDefault = {
+    /** 시작위치 - Y */
+    top: 0,
+    /** 시작위치 - X */
+    left: 0,
+    /** 가로 크기 */
+    width: "auto",
+    /** 세로 크기 */
+    height: "auto",
+
+    /** 부모에 적용할 css */
+    ParentCss: "",
+    /** 팝업이 완성되면 크기를 고정할지 여부 
+        이 옵션이 없으면 창이동시 크기가 변경될수 있다.
+     */
+    SizeFixed: false,
+
+    /** 팝업 안에 표시할 컨탠츠
+     * 오브젝트도 가능하다. */
+    Content: "",
+    /** 컨탠츠에 적용할 css */
+    ContentCss: "",
+    /** 컨탠츠에 적용할 배경색 */
+    ContentBackground: "#fff",
+
+    /**
+     * 오버레이 클릭시 사용할 이벤트
+     * null이면 오버레이를 클릭해도 동작하지 않는다.
+     * 창을 닫으려면 'DG_Popup.CloseTarget(divPopupParent);'를 넣는다.
+     * 
+     * function (nPopupIndex, divPopupParent)
+     * nPopupIndex : 생성에 사용된 인덱스
+     * divPopupParent : 생성된 창의 개체 
+     * */
+    OverlayClick: null,
+    /** 오버레이용 배경색 */
+    OverlayBackground: "#aaa",
+    /** 오버레이 불투명 값 */
+    OverlayOpacity: 0.3,
+    /** 오버레이에 적용할 css */
+    OverlayCss: ""
+};
+
+/**
+ * DG_Popup를 초기화 한다.
+ * @param {json} jsonShowOptionDefault 기본 옵션으로 사용할 옵션
+ */
+DG_Popup.Initialize = function (jsonShowOptionDefault)
 {
+    //옵션 합치기
+    DG_Popup.ShowOptionDefault
+        = Object.assign(DG_Popup.ShowOptionDefault, jsonShowOptionDefault);
+
     $(document).on("mousedown", "div.DG_PopupTitle", function (e)
     {
-        //바로 상위 div를 찾는다.
-        DG_Popup.SelectDiv = $(this).parent();
+        //좌표가 수정될 상위 div를 찾는다.
+        //DG_Popup.SelectDiv = $(this).parent();
+        DG_Popup.SelectDiv = $(this).parents(".DG_PopupContentCss");
         DG_Popup.SelectIndex = DG_Popup.SelectDiv.attr("popupIndex");
 
         //마우스 상태 변경
@@ -72,45 +124,7 @@ DG_Popup.Initialize = function ()
  */
 DG_Popup.Show = function (jsonOption)
 {
-    var jsonOptDefault = {
-        /** 팝업 안에 표시할 컨탠츠
-         * 오브젝트도 가능하다. */
-        Content: "",
-        /** 컨탠츠에 적용할 css */
-        ContentCss: "",
-
-        /** 시작위치 - Y */
-        top: 0,
-        /** 시작위치 - X */
-        left: 0,
-        /** 가로 크기 */
-        width: "auto",
-        /** 세로 크기 */
-        height: "auto",
-
-        /** 부모에 적용할 css */
-        ParentCss: "",
-
-        /** 배경색 */
-        ContentBackground: "#fff",
-
-        /**
-         * 오버레이 클릭시 사용할 이벤트
-         * null이면 오버레이를 클릭해도 동작하지 않는다.
-         * 창을 닫으려면 'DG_Popup.CloseTarget(divPopupParent);'를 넣는다.
-         * 
-         * function (nPopupIndex, divPopupParent)
-         * nPopupIndex : 생성에 사용된 인덱스
-         * divPopupParent : 생성된 창의 개체 
-         * */
-        OverlayClick: null,
-        /** 오버레이용 배경색 */
-        OverlayBackground: "#aaaaaa",
-        /** 오버레이 불투명 값 */
-        OverlayOpacity: 0.3,
-        /** 오버레이에 적용할 css */
-        OverlayCss: ""
-    };
+    var jsonOptDefault = DG_Popup.ShowOptionDefault;
 
     //옵션 합치기
     var jsonOpt = Object.assign(jsonOptDefault, jsonOption);
@@ -128,7 +142,8 @@ DG_Popup.Show = function (jsonOption)
     divPopupParent.addClass(jsonOpt.ParentCss);
 
     //오버레이용 div*************
-    var divOverlay = $("<div id='divDG_PopupOverlay" + nPopupIndex + "' class='DG_PopupOverlayCss'></div>");
+    var divOverlay = $("<div id='divDG_PopupOverlay" + nPopupIndex
+        + "' class='DG_PopupOverlayCss'></div>");
     divOverlay.addClass(jsonOpt.OverlayCss);
     divOverlay.css("background", jsonOpt.OverlayBackground);
     divOverlay.css("opacity", jsonOpt.OverlayOpacity);
@@ -176,9 +191,19 @@ DG_Popup.Show = function (jsonOption)
     //바디 끝에 사용할 div를 만들어 준다.
     $("body").append(divPopupParent);
 
-    //새로 추가한 개체를 찾는다.
+    //새로 추가한 개체를 찾는다.****************************************
     var divPopupParent_New = $("#divDG_PopupParent" + nPopupIndex);
+    var divPopup_New = $("#divDG_Popup" + nPopupIndex);
     var divOverlay_New = $("#divDG_PopupOverlay" + nPopupIndex);
+
+    if (true === jsonOpt.SizeFixed)
+    {//크기 고정
+        //완성된 크기 받기
+        var nSize = divPopup_New.width();
+        //완성된 크기를 고정값으로 지정
+        divPopup_New.width(nSize);
+    }
+    
 
     //빈곳을 클릭했을때 이벤트 주기
     if (typeof jsonOpt.OverlayClick === "function")
@@ -229,7 +254,7 @@ DG_Popup.CutBack = function (sData)
     return nReturn;
 };
 
-/** 맨 마지막 창을 닫는다. */
+/** 맨 마지막 팝업을 닫는다. */
 DG_Popup.Close = function ()
 {
     //리스트 개수
@@ -239,8 +264,8 @@ DG_Popup.Close = function ()
 };
 
 /**
- * 지정한 인덱스의 아이템을 제거
- * @param {int} nIndex 지울 인덱스
+ * 지정한 인덱스의 팝업을 닫는다.
+ * @param {int} nIndex 닫을 인덱스
  */
 DG_Popup.CloseIndex = function (nIndex)
 {
@@ -251,7 +276,7 @@ DG_Popup.CloseIndex = function (nIndex)
     DG_Popup.List.splice(nIndex, 1);
 };
 
-/** 모든 창을 닫는다. */
+/** 모든 팝업을 닫는다. */
 DG_Popup.CloseAll = function ()
 {
     var nArrLen = DG_Popup.List.length;
@@ -263,8 +288,8 @@ DG_Popup.CloseAll = function ()
 };
 
 /**
- * 지정한 대상을 지운다.
- * @param {object} objTarget 지울 대상
+ * 지정한 대상을 닫는다.
+ * @param {object} objTarget 닫을 대상
  */
 DG_Popup.CloseTarget = function (objTarget)
 {

@@ -63,7 +63,7 @@
 
     <script>
 
-        /** DG_Popup 생성 */
+        /** DG_Popup 초기화 */
         DG_Popup.Initialize();
 
         var popTemp = null;
@@ -75,8 +75,8 @@
         {
             ++nCount;
 
-            var TestContentsHtml = ' \
-                <div class="divTitle DG_PopupTitle">생성 순서 : '
+            var TestContentsHtml = '\
+                <div><div><div class="divTitle DG_PopupTitle">생성 순서 : '
                     + nCount +
                 '</div> \
                 <div class="divContents"> \
@@ -91,7 +91,7 @@
                     <button onclick="CloseAll()">All Close</button>\
                     <br />\
                     <button onclick="Close()">Close</button>\
-                </div>';
+                </div></div></div>';
 
             popTemp = DG_Popup.Show({
                 Content: TestContentsHtml,
@@ -107,6 +107,7 @@
                 }
             });
         }
+
 
         /** 닫기 이벤트 구현 */
         function Close()

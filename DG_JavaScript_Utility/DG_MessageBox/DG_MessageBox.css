@@ -1,46 +1,276 @@
-﻿.DG_MessageBoxContentCss {
+﻿.DG_PopupContentCss {
+    border-radius: 5px;
+}
+
+
+/**
+    BigIcon css 참고 : Nicolas Gallagher - Pure CSS GUI icons(http://nicolasgallagher.com/pure-css-gui-icons/demo/)
+*/
+.DG_MessageBoxContentCss {
     border-radius: 3px;
     padding: 3px;
     margin: 3px;
 }
 
 .DG_MessageBoxTitle {
-    background: #b6ff00;
-    padding: 3px;
-    border-radius: 3px;
+    background: #337AB7;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    color:#fff;
+    font-weight:bold;
 }
 
 .DG_MessageBoxContent {
-    padding: 5px 0;
-
+    padding: 10px;
 }
 
 .DG_MessageBoxFooter {
     text-align: center;
+    padding: 10px 0;
 }
 
+/** 큰 아이콘 - 정보 */
 .DG_MessageBoxBigIcon_info {
-    float:left;
-    background: radial-gradient(50px 50px at 50% 50%, blue 50%, transparent 50%);
-    background-repeat: no-repeat;
+    float: left;
+    margin-right: 10px;
+    margin-top: -3px;
+
+    left: 3px;
     width: 50px;
     height: 50px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+    background: #2385BA;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-indent: 0px;
 }
+    .DG_MessageBoxBigIcon_info:before {
+        content: "i";
+    }
+
+/** 큰 아이콘 - 경고 */
 .DG_MessageBoxBigIcon_Warning {
     float: left;
-    background: radial-gradient(50px 50px at 50% 50%, yellow 50%, transparent 50%);
-    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-top: -3px;
     width: 50px;
     height: 50px;
 }
+    .DG_MessageBoxBigIcon_Warning:before {
+        content: "";
+        border-width: 0 25px 45px;
+        border-style: solid;
+        border-color: #F8D201 transparent;
+        background: transparent;
+        position: absolute;
+    }
+    .DG_MessageBoxBigIcon_Warning:after {
+        content: "!";
+        left: 23px;
+        margin-top: -1px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #000;
+        position: absolute;
+        text-indent: 5px;
+    }
+
+/** 큰 아이콘 - 에러 */
 .DG_MessageBoxBigIcon_Error {
     float: left;
-    background: radial-gradient(50px 50px at 50% 50%, red 50%, transparent 50%);
-    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-top: -3px;
     width: 50px;
     height: 50px;
 }
+    .DG_MessageBoxBigIcon_Error:before {
+        content: "";
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        border: 10px solid #C00000;
+        background: transparent;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        border-radius: 40px;
+        position: absolute;
+    }
+    .DG_MessageBoxBigIcon_Error:after {
+        content: "";
+        left: 9px;
+        width: 40px;
+        height: 10px;
+        margin-top: 21px;
+        background: #C00000;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        position: absolute;
+    }
+
+/** 큰 아이콘 - 질문 */
+.DG_MessageBoxBigIcon_Question {
+    float: left;
+    margin-right: 10px;
+    margin-top: -3px;
+    left: 3px;
+    width: 50px;
+    height: 50px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+    background: #000;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-indent: 2px;
+}
+    .DG_MessageBoxBigIcon_Question:before {
+        content: "?";
+    }
+
+/** 큰 아이콘 - 성공 */
+.DG_MessageBoxBigIcon_Success {
+    float: left;
+    margin-right: 10px;
+    margin-top: -3px;
+    width: 50px;
+    height: 50px;
+}
+    .DG_MessageBoxBigIcon_Success:before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        width: 10px;
+        height: 25px;
+        border-width: 0 10px 10px 0;
+        border-style: solid;
+        border-color: #47dc60;
+        margin-top: 5px;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+/** 큰 아이콘 - 도움 */
+.DG_MessageBoxBigIcon_Help {
+    float: left;
+    margin-right: 10px;
+    margin-top: -3px;
+    left: 3px;
+    width: 50px;
+    height: 50px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+    background: #2385BA;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-indent: 2px;
+}
+
+    .DG_MessageBoxBigIcon_Help:before {
+        content: "?";
+    }
 
 .DG_MessageBoxContentHtml {
 
 }
+
+
+/** 버튼 css
+    https://designtheway.com/css-buttons/
+*/
+.DG_MessageBoxFooter > button {
+    margin:0 5px;
+    width: 100px;
+    background: transparent;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    outline: none;
+    position: relative;
+    top: 0;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -ms-transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
+    border-radius: 5px;
+}
+
+    .DG_MessageBoxFooter > button.BtnBlue {
+        background: #3cbce1;
+        color: #fff;
+        box-shadow: 0 3px 0 #1fa4cb;
+    }
+        .DG_MessageBoxFooter > button.BtnBlue:hover {
+            background: #56d7ed;
+        }
+        .DG_MessageBoxFooter > button.BtnBlue:active
+        , .DG_MessageBoxFooter > button.BtnBlue:focus {
+            background: #2fb7df;
+        }
+
+
+    .DG_MessageBoxFooter > button.BtnRed {
+        background: #e84c3d;
+        color: #fff;
+        box-shadow: 0 3px 0 #d82a1a;
+    }
+        .DG_MessageBoxFooter > button.BtnRed:hover {
+            background: #f57b8a;
+        }
+        .DG_MessageBoxFooter > button.BtnRed:active
+        , .DG_MessageBoxFooter > button.BtnRed:focus {
+            background: #e63b2b;
+        }
+
+    .DG_MessageBoxFooter > button.BtnLlightGreen {
+        background: #87bc58;
+        color: #fff;
+        box-shadow: 0 3px 0 #6ea140;
+    }
+        .DG_MessageBoxFooter > button.BtnLlightGreen:hover {
+            background: #c0da82;
+        }
+        .DG_MessageBoxFooter > button.BtnLlightGreen:active
+        , .DG_MessageBoxFooter > button.BtnLlightGreen:focus {
+            background: #7fb84d;
+        }
+
+    .DG_MessageBoxFooter > button.BtnOrange {
+        background: #e77e22;
+        color: #fff;
+        box-shadow: 0 3px 0 #c16515;
+    }
+        .DG_MessageBoxFooter > button.BtnOrange:hover {
+            background: #f6b417;
+        }
+        .DG_MessageBoxFooter > button.BtnOrange:active
+        , button.BtnOrange:focus {
+            background: #dd7418;
+        }

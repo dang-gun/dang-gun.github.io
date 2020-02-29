@@ -9,3 +9,8 @@
 기본 html과 css가 들어 있지 않습니다.<br />
 예제를 꼭 직접 따라하고 사용하는 것이 좋습니다.<br />
 <br />
+<br />
+[DG Popup 1.0 - DIV 팝업을 여러 개 열어 관리하는 유틸리티](https://blog.danggun.net/7988)
+<br />
+[테스트](https://dang-gun.github.io/DG_JavaScript_Utility/DG_Popup/DG_Popup.html)
+<br />

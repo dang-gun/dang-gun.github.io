@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="DG_MessageBox.css">
 
     <style>
-
+        
     </style>
 
     <!-- jquery 3.4.1 -->
@@ -21,11 +21,15 @@
     <script src="DG_MessageBox.js"></script>
 </head>
 
-<body>
+<body style="width: 3000px;">
+
     <h3>DG MessageBox</h3>
+    <br />
 
     <br />
-    <select id="selectBtnType">
+    <br />
+    <br />
+    <select id="selectButtonShowType">
         <option value="1">Ok</option>
         <option value="2">OkCancel</option>
         <option value="3">Cancel</option>
@@ -36,6 +40,9 @@
         <option value="1">Info</option>
         <option value="2">Warning</option>
         <option value="3">Error</option>
+        <option value="4">Question</option>
+        <option value="5">Success</option>
+        <option value="6">Help</option>
     </select>
     <div>
         <button onclick="ShowMgr()">Message Box Show!</button>
@@ -57,7 +64,10 @@
                 Title: "테스트 메시지 박스 " + nCount,
                 Content: "여기는 메시지 박스 출력입니다. " + nCount,
 
-                ButtonType: Number($("#selectBtnType").val()),
+                top: 200,
+                left: 200,
+
+                ButtonShowType: Number($("#selectButtonShowType").val()),
                 BigIconType: Number($("#selectBigIconType").val()),
                 ButtonEvent: function (btnType)
                 {
@@ -65,15 +75,15 @@
                     DG_Popup.Close();
 
                     var TestContentsHtml = ' \
-                            <div class="divTitle DG_PopupTitle">버튼 결과! </div> \
-                            <div class="divContents"> \
-                                결과 :'+ btnType + ' <br />\
-                                <br />\
-                                <br />\
-                                <button onclick="DG_Popup.CloseAll()">All Close</button>\
-                                <br />\
-                                <button onclick="DG_Popup.Close()">Close</button>\
-                            </div>';
+                                                <div class="divTitle DG_PopupTitle">버튼 결과! </div> \
+                                                <div class="divContents"> \
+                                                    결과 :'+ btnType + ' <br />\
+                                                    <br />\
+                                                    <br />\
+                                                    <button onclick="DG_Popup.CloseAll()">All Close</button>\
+                                                    <br />\
+                                                    <button onclick="DG_Popup.Close()">Close</button>\
+                                                </div>';
 
                     DG_Popup.Show({
                         Content: TestContentsHtml,
