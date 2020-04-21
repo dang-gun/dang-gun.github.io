@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>1. 설치와 기본기능 사용</title>
+
+    <!-- Toast Editor 2.0.0과 의존성 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css" />
+    <!--<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />-->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/2.0.0/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/v4.10.0/tui-grid.min.css" />
+
+</head>
+<body>
+    <div class="tui-doc-description">
+        <h3>Toast UI Editor 2.0.0 Test</h3>
+        <h2>설치와 기본기능 사용</h2>
+        <strong>
+            1) 토스트 에디터와 뷰어를 출력합니다.<br />
+            2) 에디터에서 내용을 받아옵니다. : editor.getMarkdown() <br />
+            3) 뷰어에 데이터를 설정합니다. : viewer.setMarkdown() <br />
+        </strong>
+        <br />
+        에디터 생성 옵션 API
+        <a href="https://nhn.github.io/tui.editor/latest/ToastUIEditor" target="_blank">here</a>.
+        <br />
+        <br />
+    </div>
+    <div class="code-html tui-doc-contents">
+        <div id="editor"></div>
+    </div>
+    <br />
+    <br />
+    <button onclick="ToView();">↓↓↓ 불러서 넣기 ↓↓↓</button>
+    <br />
+    <br />
+    <div class="code-html tui-doc-contents">
+        <div id="viewer">
+            <strong>
+                데이터를 불러오는 중입니다.
+            </strong>
+        </div>
+    </div>
+    
+    <!-- Toast Editor 2.0.0 -->
+    <!--<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.js"></script>-->
+    <script src="https://uicdn.toast.com/editor/2.0.0/toastui-editor-all.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-grid/v4.10.0/tui-grid.min.js"></script>
+
+    <script>
+
+        /* eslint-disable no-unused-vars */
+        const content = [
+            '![image](https://uicdn.toast.com/toastui/img/tui-editor-bi.png)',
+            '',
+            '# Heading 1',
+            '## Heading 2',
+            '### Heading 3',
+            '#### Heading 4',
+            '##### Heading 5',
+            '###### Heading 6',
+            '',
+            '**bold** *italic* ~~strikethrough~~',
+            '<span style="color:#e11d21;">Color Syntax</span>',
+            '[link](https://nhn.github.io/tui.editor/)',
+            '',
+            '---',
+            'horizontal line',
+            '***',
+            '',
+            '> block quote',
+            '>> block quote (2 depth)',
+            '>>> block quote (3 depth)',
+            '',
+            '* list',
+            '    * list indented',
+            '1. ordered',
+            '2. list',
+            '    1. ordered list',
+            '    2. indented',
+            '',
+            '- [ ] task',
+            '- [x] list completed',
+            '',
+            '`inline code`',
+            '',
+            '    code block',
+            '```js',
+            'console.log("fenced code block");',
+            '```',
+            '<pre>**HTML block**</pre>',
+            '',
+            '| table | head |',
+            '| ----  | ---- |',
+            '| table | body |'
+        ].join('\n');
+
+        const editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            previewStyle: 'vertical',
+            initialEditType: "wysiwyg",
+            height: '500px',
+            initialValue: content
+        });
+
+        const viewer = toastui.Editor.factory({
+            el: document.querySelector('#viewer'),
+            viewer: true,
+            height: '500px',
+            initialValue: content
+        });
+
+        function ToView()
+        {
+            viewer.setMarkdown(editor.getMarkdown());
+        };
+    </script>
+</body>
+</html>
