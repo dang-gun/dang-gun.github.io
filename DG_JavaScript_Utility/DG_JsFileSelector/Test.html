@@ -1,0 +1,76 @@
+﻿<!doctype html>
+
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <style>
+        #drop_zone {
+            border: 5px solid blue;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+
+    <!-- jquery 3.4.1 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="DG_JsFileSelector.css">
+    
+</head>
+
+<body>
+    <h3>DG JsFileSelector</h3>
+    <br />
+    자바스크립트 파일 선택 UI<br />
+    <br />
+    <div id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <p>Drag one or more files to this Drop Zone ...</p>
+    </div>
+
+    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+
+    <script>
+        function dropHandler(ev)
+        {
+            console.log('File(s) dropped');
+
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+
+            if (ev.dataTransfer.items)
+            {
+                // Use DataTransferItemList interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.items.length; i++)
+                {
+                    // If dropped items aren't files, reject them
+                    if (ev.dataTransfer.items[i].kind === 'file')
+                    {
+                        var file = ev.dataTransfer.items[i].getAsFile();
+                        console.log('... file[' + i + '].name = ' + file.name);
+                    }
+                }
+            } else
+            {
+                // Use DataTransfer interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.files.length; i++)
+                {
+                    console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+                }
+            }
+        }
+
+        function dragOverHandler(ev)
+        {
+            console.log('File(s) in drop zone');
+
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+        }
+    </script>
+</body>
+
+</html>

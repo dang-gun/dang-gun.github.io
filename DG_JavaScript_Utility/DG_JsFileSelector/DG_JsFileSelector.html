@@ -1,0 +1,92 @@
+﻿<!doctype html>
+
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <style>
+        #txtOri, #txtOutput {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+
+    <!-- jquery 3.4.1 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="DG_JsFileSelector.css">
+    <script src="DG_JsFileSelector.js"></script>
+</head>
+
+<body>
+    <h3>DG JsFileSelector</h3>
+    <br />
+    자바스크립트 파일 선택 UI<br />
+    <br />
+    <button onclick="Test_FileAdd();">완성된 파일 정보 추가</button>
+    <br />
+    <br />
+    <div id="divOutput">
+
+    </div>
+
+    <script>
+        var dgFS = new DG_JsFileSelector({
+            Area: $("#divOutput"),
+            Debug: true,
+
+            LoadComplete: FS_LoadComplete
+        });
+
+        function Test_FileAdd()
+        {
+            dgFS.FileAdd_UI_List(
+                [{
+                    Name: "테스트 파일01.test",
+                    Extension: ".test",
+                    Size: 3000,
+                    Type: "",
+                    Description: "테스트 파일",
+                    BinaryIs: false,
+                    BinaryReadyIs: false,
+                    Binary: "",
+                    idFile: 1,
+                    Url: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile27.uf.tistory.com%2Fimage%2F9945DA4E5EB820131E2E30",
+                    Edit: false,
+                    Delete: false,
+                },
+                {
+                    Name: "테스트 파일02.jpg",
+                    Extension: ".jpg",
+                    Size: 3000,
+                    Type: "",
+                    Description: "테스트 파일",
+                    BinaryIs: false,
+                    BinaryReadyIs: false,
+                    Binary: "",
+                    idFile: 1,
+                    Url: "https://t1.daumcdn.net/cfile/tistory/995EA74E5E5A9BB409?original",
+                    Edit: false,
+                    Delete: false,
+                }]);
+        }
+
+        function testCall()
+        {
+            dgFS.ItemList_Get();
+        }
+
+
+        function FS_LoadComplete(objThis)
+        {
+            console.log("로드 완료");
+
+        }
+
+    </script>
+</body>
+
+</html>

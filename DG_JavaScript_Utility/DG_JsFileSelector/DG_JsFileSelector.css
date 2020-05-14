@@ -1,0 +1,62 @@
+﻿.DG_JsFileSelectorArea {
+    width: 100%;
+    height: 130px;
+    border: #000 solid 1px;
+    overflow: auto;
+}
+
+.DG_JsFileSelector_FileSelector {
+    display:none;
+}
+
+.DG_JsFileSelector_ItmeWrap {
+    margin: 5px;
+    float: left;
+    width: 90px;
+    height: 120px;
+    background-color: #e6e6e6;
+}
+
+.DG_JsFileSelector_FileImageWrap {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+}
+
+.DG_JsFileSelector_FileImageSizeWrap {
+    height: 80px;
+    width: 80px;
+    margin: 5px;
+}
+
+.DG_JsFileSelector_DeleteBtn {
+    background-color: #525252;
+    color: #F7F7F7;
+    font-weight: 700;
+    border-radius: 12px;
+    border: none;
+    height: 22px;
+    width: 22px;
+    padding: 4px;
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    margin: 0;
+    line-height: 17px;
+}
+
+.DG_JsFileSelector_FileImage {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.DG_JsFileSelector_FileName {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.DG_JsFileSelector_FileSize {
+    font-size: 10px;
+    text-align:right;
+}
