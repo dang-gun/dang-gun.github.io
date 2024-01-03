@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>HTML 돔(dom)을 감시대상(Overwatch)개체로 관리하기</h2>
+
+	<div id="divMenu">
+	</div>
+
+	<div>
+		생성된 HTML 돔을 오버워치 개체로 관리할 수 있다.<br />
+		내부적으로 replaceChild을 해주므로 외부에서 생성된 개체도 계속 유지된다.
+	</div>
+	<br />
+
+	<button id="btnClick">돔을 직접 찾아 교체</button>
+	<button id="btnClick2">엑스뷰를 이용하여 교체</button><br />
+	<input type="text" id="txtInput" value="표시할 값" />
+
+	<div id="divAxeViewTset">
+		<h3>돔</h3>
+		<div {{HtmlDom}}></div>
+		<br />
+		<br />
+		<div {{HtmlDom2}}>초기값 지정안한 돔</div>
+	</div>
+
+</body>
+</html>

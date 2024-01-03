@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test - Basic Sample</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+
+	<div id="divMenu">
+	</div>
+
+
+	<button id="btnClick">클릭!!</button>
+	<button id="btnClick2">클릭2!!</button>
+	<div id="divAxeViewTset">
+		{{StringTest}}, {{StringTest}} <br />{"{{HtmlTest}}"}
+		<button onclick="{{FunctionTest}}">이벤트 바인딩 테스트</button>
+		<!-- div 테스트 -->
+		<div id="divTemp1"
+			 class="AxeTest NewElem {{CssTest}}"
+			 axeTest="{{MonitoringAttr1}}"
+			 {{MonitoringAttr2}}
+			 axeTest2="{{MonitoringAttr3}}">
+			{"{{StringTest}}"}, {"{{HtmlTest}}"}
+		</div>
+		<div>
+			{"{{MonitoringString}}"}, {"{{StringTest}}"}
+			<label>{{MonitoringString}}</label>
+		</div>
+		<div>
+			aaa1{"{{MonitoringString}}"}bbbb2
+			<div>
+				{"{{MonitoringString}}"},asdfasd
+			</div>
+		</div>
+		<div>
+			aaa3 {"{{MonitoringHtml}}"} bbb4 {"{{MonitoringString}}"}
+		</div>
+
+		<input id="txtAttr4" value="{{MonitoringAttr4}}" />
+		<br />
+		<a href="/Test5_1">Test 링크 5-1</a><br />
+		<a href="/Test5_2">Test 링크 2</a>
+		<a href="/Test5_3" hrefonly=>Test 링크 3</a>
+	</div>
+</body>
+</html>

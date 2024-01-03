@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+</head>
+<body>
+	<h2>환영!</h2>
+
+	<button id="btnClick">클릭!!</button>
+	<div id="divAxeViewTset">
+		<div>
+			<div id="divTargetPreview" class="p-3 mb-3 bg-my-white rounded-my shadow-my">
+				<div class="row">
+					<div class="col">
+						<div class="input-group mb-3">
+							<input type="text" id="txtTargetUrl"
+								   class="form-control"
+								   aria-describedby="btnTargetPreview"
+								   placeholder="대상 주소 입력" />
+							<button id="btnTargetPreview" onclick="{{ItemPreviewClick}}" class="btn btn-outline-secondary">
+								대상 확인
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="divTargetPreviewUrl" class="d-none">
+					<div>
+						<figure>
+							<blockquote class="blockquote">
+								<p><label id="labMadiaTitle" class="labMadiaTitle">{{MonitoringString}}</label></p>
+							</blockquote>
+							<figcaption class="blockquote-footer">
+								<label id="labCompanyName" class="labCompanyName"></label>
+							</figcaption>
+						</figure>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<iframe id="iframeTargetPreview" class="w-100"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="divPaserDetail" class="p-3 mb-3 bg-my-white rounded-my shadow-my d-none">
+			</div>
+
+			<div id="divAddInfo" class="p-3 mb-3 bg-my-white rounded-my shadow-my d-none">
+			</div>
+
+			<div id="divConfirm" class="p-3 mb-3 bg-my-white rounded-my shadow-my d-none">
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>뷰나 감시자에서 옵션 전달하기 - 개별 옵션 처리</h2>
+
+	<div id="divMenu">
+	</div>
+
+	<div>
+		하나의 감시자가 여러개의 대상을 가지고 있을 수 있다.<br />
+		이때 각각의 대상에 다른 옵션을 뷰를 통해서 줄 수 있다.<br />
+	</div>
+	<br />
+	<br />
+
+	<button id="btnClick">금액 적용</button>
+	<input type="text" id="txtInput" value="10000" />
+	<div id="divAxeViewTset">
+		<h3>돈(money)</h3>
+		<ul>
+			<li>돈(콤마,$) : {{Money@val:100,coma:true,currency:$}}</li>
+			<li>돈(콤마,￦) : {{Money@val:500,coma:true,currency:￦}}</li>
+			<li>돈(￥) : {{Money@val:500,coma:false,currency:￥}}</li>
+			<li>돈(￡) : {{Money@val:500,coma:false,currency:￡}}</li>
+		</ul>
+	</div>
+
+</body>
+</html>

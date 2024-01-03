@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>뷰나 감시자에서 옵션 전달하기</h2>
+
+	<div id="divMenu">
+	</div>
+
+	<div>
+		뷰나 감시자에서 옵션을 전달할 수 있다.<br />
+	</div>
+	<br />
+
+	
+	<div id="divAxeViewTset">
+		<h3>돔1</h3>
+		<div {{HtmlDom}}>돔1</div>
+		<br />
+		<br />
+		<br />
+		<h3>돔2 (뷰옵션과 감시자옵션 둘다 설정함)</h3>
+		<div {{HtmlDom2@title:제목hTml,coma:true}}></div>
+		<br />
+		<br />
+		<h2>*** 콘솔(console) 확인 ***</h2>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>AxeView 안에있는 A태그 처리</h2>
+
+	<div id="divMenu">
+	</div>
+
+	<div>
+		SPA에서 A태그는 라우터 전달 동작과 지정된 링크주소로 이동하는 2가지 경우가 있다.<br />
+		라우터로 전달하려는 경우 A태그의 동작을 클릭으로 바꿔준다.
+	</div>
+	<br />
+
+	<div id="divAxeViewTset">
+		라우터1 : <a href="/Test5_1">Test 링크 5-1</a><br />
+		라우터2 : <a href="/Test5_2">Test 링크 5-2</a><br />
+		링크 이동 : <a href="/Test5_3" hrefonly>Test 링크 3</a><br />
+		<br />
+		{{OutData}}
+	</div>
+
+</body>
+</html>

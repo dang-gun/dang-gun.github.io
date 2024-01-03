@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test - Start Up</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>시작하기</h2>
+
+	<div id="divMenu">
+	</div>
+	
+	<br />
+
+	<h3>빠른 시작</h3>
+	<div id="divAxeViewTset0">
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="1" onchange="{{RadioChange}}" />R
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="2" onchange="{{RadioChange}}" />G
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="3" onchange="{{RadioChange}}" />B
+		<div style="{{CssTest1}}">
+			{{StringTest1}}
+		</div>
+	</div>
+
+	<br />
+	<br />
+	<h3>단순 문자열 교체 및 수정</h3>
+	<button id="btnStringTest1">문자열 교체 및 수정</button><br />
+	<input type="text" id="txtInputStringTest1" value="표시할 값" />
+	<div id="divAxeViewTset1">
+		교체 : {{StringTest1}}('FirstData'만 적용됨)<br />
+		수정 : {{StringTest2}}<br />
+		수정2 : {{StringTest2}}(하나로 여러개 지정)<br />
+	</div>
+
+	<br />
+	<br />
+	<h3>HTML 출력</h3>
+	<button id="btnHtmlTest1">Html 수정</button><br />
+	<textarea id="txtHtmlTest1"></textarea>
+	<div id="divAxeViewTset2">
+		div : {{HtmlTest1}}
+		<br />
+		a : {{HtmlTest2}}
+	</div>
+
+	<br />
+	<br />
+	<h3>값 가지고 오기</h3>
+	<button id="btnInputMonitoringTest1">입력2 확인</button><br />
+	<div id="divAxeViewTset3">
+		입력1 : <input value="{{InputMonitoringTest1}}" />
+		<br />
+		입력2 : <input value="{{InputMonitoringTest2}}" />
+		<br />
+		읽은 값 : {{InputMonitoringTest3}}, {{InputMonitoringTest4}}
+	</div>
+</body>
+</html>

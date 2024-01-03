@@ -1,0 +1,75 @@
+﻿<div id="divAxeViewTset">
+	{"{{StringTest}}"}<br />
+	<div>
+		{"{{StringTest}}"}, {"{{HtmlTest}}"}
+	</div>
+	<div>
+		{"{{MonitoringString}}"}, {"{{StringTest}}"}
+	</div>
+	<div>
+		aaa{"{{MonitoringString}}"}bbbb
+		<div>
+			{"{{MonitoringString}}"},asdfasd
+		</div>
+	</div>
+	<div>
+		aaa {"{{MonitoringHtml}}"} bbb {"{{MonitoringString}}"}
+	</div>
+</div>
+
+<script>
+	//AxeView 테스트용 변수
+	arrTarget: Overwatch[] = [];
+
+	function test()
+	{
+		this.arrTarget[2].data = "클릭했다!!!";
+		this.arrTarget[3].data = "<h2>클릭했다!!HTML</h2>";
+	}
+
+
+
+	//액스뷰 테스트****
+	this.arrTarget.push(
+		//단순 문자열 검색
+		new Overwatch({
+			Name: "StringTest"
+			, Action: "문자열 출력!!"
+			, OverwatchingType: OverwatchingType.Output_String
+			, OverwatchingOneIs: true
+		}));
+
+	this.arrTarget.push(
+		//단순 html 검색
+		new Overwatch({
+			Name: "HtmlTest"
+			, Action: "<h3>Html 출력!</h3>"
+			, OverwatchingType: OverwatchingType.Output_Html
+			, OverwatchingOneIs: true
+		}));
+
+	this.arrTarget.push(
+		//모니터링 문자열 검색
+		new Overwatch({
+			Name: "MonitoringString"
+			, Action: "모니터링중 - 문자열"
+			, OverwatchingType: OverwatchingType.Monitoring_String
+			, OverwatchingOneIs: false
+		}));
+
+	this.arrTarget.push(
+		//모니터링 문자열 검색
+		new Overwatch({
+			Name: "MonitoringHtml"
+			, Action: "<h1>모니터링중Html</h1>"
+			, OverwatchingType: OverwatchingType.Monitoring_Html
+			, OverwatchingOneIs: false
+		}));
+
+	GlobalStatic.AxeView.HtmlToOverwatch(
+		$("#divAxeViewTset").get(0)
+		, this.arrTarget);
+
+
+        //end 액스뷰 테스트****
+</script>

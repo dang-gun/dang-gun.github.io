@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<!--<link rel="shortcut icon" href="/favicon.ico">-->
+	<!--<base href="/home/">-->
+	<title>AxeView Test</title>
+	<script defer src="../app.js"></script>
+</head>
+<body>
+	<h2>환영!</h2>
+
+	<div id="divMenu">
+	</div>
+
+	<div id="divAxeViewTset">
+
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="1" onchange="{{RadioChange}}" />R
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="2" onchange="{{RadioChange}}" />G
+		<input type="radio" name="CssTest1" id="radioCssTest1" value="3" onchange="{{RadioChange}}" />B
+		<div style="{{CssTest1}}">
+			{{StringTest1}}
+		</div>
+	</div>
+
+
+</body>
+</html>
